@@ -34,6 +34,16 @@ class sat:
 		print('argument pedigree : ',self.argument_pedigree)
 		print('mean anomoly : ',self.mean_anomoly)
 		print('mean mootion : ', self.neam_motion)
+    #if the satellite is critically inclined
+		if (abs(self.inclination - 64.3) <= 1):
+      print('The satellite is in a critically inclined orbit.')
+    else:
+      print('The satellite is not in a critically inclined orbit.')
+    #if the satellite is in a Molniya orbit
+    if (abs(self.argument_pedigree - 270) <= 20 and abs(self.inclination - 64.3) <= 1):
+      print('The satellite is in a Molyniya orbit.')
+    else:
+      print('The satellite is not in a Molniya orbit.')
 		return ''
 		#print('revolution of number epoch : ',self.revolution_num_epoch)
 
