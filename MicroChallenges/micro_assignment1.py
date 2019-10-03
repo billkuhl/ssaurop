@@ -1,3 +1,4 @@
+import ephem
 
 class sat:
 	def __init__(self,line1,line2):
@@ -16,6 +17,7 @@ class sat:
 		self.argument_pedigree = line2[5]
 		self.mean_anomoly = line2[6]
 		self.neam_motion = line2[7]
+		self.elevation = 0
 		#self.revolution_num_epoch = line2[8]
 
 	def __str__(self,):
@@ -34,6 +36,7 @@ class sat:
 		print('argument pedigree : ',self.argument_pedigree)
 		print('mean anomoly : ',self.mean_anomoly)
 		print('mean mootion : ', self.neam_motion)
+		print('altitude : ', self.elevaiton)
     #if the satellite is critically inclined
 		if (abs(self.inclination - 64.3) <= 1):
       print('The satellite is in a critically inclined orbit.')
@@ -72,9 +75,13 @@ def create_satlist(L):
 	final = set()
 	for step in range(0,len(tle_list)-1,2):
 		new = sat(L[step],L[step+1])
+		print(tle_str[step],tle_str[step+1])
+		elea = ephem.readtle('something',tle_str[step],tle_str[step+1])
+		elea.compute()
+		ele = elea.elevation
+		new.elevation = ele
 		final.add(new)
 	return final
-
 
 satellites = create_satlist(tle_list)
 for item in satellites:
