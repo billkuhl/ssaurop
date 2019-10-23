@@ -1,6 +1,3 @@
-#import libraries if needed
-import math
-
 #read files
 
 manu0 = 'ssa_urop_maneuver_10000.txt'
@@ -45,7 +42,7 @@ def divergence(manu):
 
 print("Manuever Starting Times")
 starting_time_indexes = []
-for b in range(1, 6):
+for b in range(1, 7):
     starting_time_indexes.append(divergence(b))
     a = starting_time_indexes[b-1]
     try:
@@ -57,23 +54,27 @@ for b in range(1, 6):
 #determine where the maneuver ends by seeing when acceleration is 0 (velocity remains constant)
 
 def constant_velocity(manu):
-    for a in range(1, len(manus[1])):
-        #velocities are in columns 10-12
-        speed1 = (float(manus[manu][a-1][10])**2 + float(manus[manu][a-1][11])**2 + float(manus[manu][a-1][12])**2)**0.5
-        speed2 = (float(manus[manu][a][10])**2 + float(manus[manu][a][11])**2 + float(manus[manu][a][12])**2)**0.5
-        #speed1 = (manus[manu][a-1][10]**2 + manus[manu][a-1][11]**2 + manus[manu][a-1][12]**2)**0.5
-        #speed2 = (manus[manu][a][10]**2 + manus[manu][a][11]**2 + manus[manu][a][12]**2)**0.5
-        #epochs are 10 minutes apart
-        if (speed2-speed1)/10 < 0.05:
-            return a
-            #return str(manus[manu][a][1], manus[manu][a][2], manus[manu][a][3], manus[manu][a][4], manus[manu][a][5], manus[manu][a][6])
+    if not starting_time_indexes[manu-1] == None:
+        for a in range(starting_time_indexes[manu-1], len(manus[1])):
+            #velocities are in columns 10-12
+            speed1 = (float(manus[manu][a-1][10])**2 + float(manus[manu][a-1][11])**2 + float(manus[manu][a-1][12])**2)**0.5
+            speed2 = (float(manus[manu][a][10])**2 + float(manus[manu][a][11])**2 + float(manus[manu][a][12])**2)**0.5
+            #speed1 = (manus[manu][a-1][10]**2 + manus[manu][a-1][11]**2 + manus[manu][a-1][12]**2)**0.5
+            #speed2 = (manus[manu][a][10]**2 + manus[manu][a][11]**2 + manus[manu][a][12]**2)**0.5
+            #epochs are 10 minutes apart
+            if (speed2-speed1)/10 < 0.05:
+                return a
+                #return str(manus[manu][a][1], manus[manu][a][2], manus[manu][a][3], manus[manu][a][4], manus[manu][a][5], manus[manu][a][6])
 
 print("Manuever Ending Times")
 ending_time_indexes = []
-for b in range(1, 6):
+for b in range(1, 7):
     ending_time_indexes.append(constant_velocity(b))
     a = ending_time_indexes[b-1]
-    print("Manuever", b, str(manus[b][a][1]), str(manus[b][a][2]), str(manus[b][a][3]), str(manus[b][a][4]), str(manus[b][a][5]), str(manus[b][a][6]))
+    try:
+        print("Manuever", b, str(manus[b][a][1]), str(manus[b][a][2]), str(manus[b][a][3]), str(manus[b][a][4]), str(manus[b][a][5]), str(manus[b][a][6]))
+    except:
+        print("No maneuver, and thus no ending time.")
 
 #magnitude
 def magnitude(start, stop, manu):
@@ -81,7 +82,7 @@ def magnitude(start, stop, manu):
     return ((float(manus[manu][stop][7])-float(manus[manu][start][7]))**2 +(float(manus[manu][stop][8])-float(manus[manu][start][8]))**2 +(float(manus[manu][stop][9])-float(manus[manu][start][9]))**2)**0.5
 
 print("Magnitudes")
-for b in range(1, 6):
+for b in range(1, 7):
     try:
         print(magnitude(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
     except:
@@ -94,7 +95,7 @@ def direction(start, stop, manu):
     return ((float(manus[manu][stop][7])-float(manus[manu][start][7]))/mag, (float(manus[manu][stop][8])-float(manus[manu][start][8]))/mag, (float(manus[manu][stop][9])-float(manus[manu][start][9]))/mag)
 
 print("Directions")
-for b in range(1, 6):
+for b in range(1, 7):
     try:
         print(direction(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
     except:
