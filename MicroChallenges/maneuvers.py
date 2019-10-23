@@ -1,3 +1,6 @@
+#import libraries if needed
+import math
+
 #read files
 
 manu0 = 'ssa_urop_maneuver_10000.txt'
@@ -33,11 +36,11 @@ def divergence(manu):
     for a in range(0, len(manus[1])):
         #if percent error is larger than 5%, the maneuver must have begun
         try:
-            if abs((float(manus[manu][a][7]) - float(manus[0][a][8]))/float(manus[0][a][7])) > 0.05:
+            if abs((float(manus[manu][a][7]) - float(manus[0][a][7]))/float(manus[0][a][7])) > 0.05:
                 return a
                 #return str(manus[manu][a][1], manus[manu][a][2], manus[manu][a][3], manus[manu][a][4], manus[manu][a][5], manus[manu][a][6])
         except:
-            if abs((float(manus[manu][a][7]) - float(manus[0][a][8]))/0.001) > 0.05:
+            if abs((float(manus[manu][a][7]) - float(manus[0][a][7]))/0.001) > 0.05:
                 return a
 
 print("Manuever Starting Times")
@@ -45,7 +48,10 @@ starting_time_indexes = []
 for b in range(1, 6):
     starting_time_indexes.append(divergence(b))
     a = starting_time_indexes[b-1]
-    print("Manuever", b, str(manus[b][a][1]), str(manus[b][a][2]), str(manus[b][a][3]), str(manus[b][a][4]), str(manus[b][a][5]), str(manus[b][a][6]))
+    try:
+        print("Manuever", b, str(manus[b][a][1]), str(manus[b][a][2]), str(manus[b][a][3]), str(manus[b][a][4]), str(manus[b][a][5]), str(manus[b][a][6]))
+    except:
+        print("Maneuver does not start.")
 
 #ending time
 #determine where the maneuver ends by seeing when acceleration is 0 (velocity remains constant)
@@ -76,7 +82,10 @@ def magnitude(start, stop, manu):
 
 print("Magnitudes")
 for b in range(1, 6):
-    print(magnitude(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
+    try:
+        print(magnitude(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
+    except:
+        print("No maneuver, and thus no magnitude.")
 
 #direction
 #find directional unit vector by dividing vector by magnitude
@@ -86,4 +95,7 @@ def direction(start, stop, manu):
 
 print("Directions")
 for b in range(1, 6):
-    print(direction(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
+    try:
+        print(direction(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
+    except:
+        print("No maneuver, and thus, not direction.")
