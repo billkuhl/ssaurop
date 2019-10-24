@@ -1,6 +1,3 @@
-#import libraries if needed
-import math
-
 #read files
 
 manu0 = 'ssa_urop_maneuver_10000.txt'
@@ -71,7 +68,7 @@ def constant_velocity(manu):
 print("Manuever Ending Times")
 ending_time_indexes = []
 for b in range(1, 7):
-    ending_time_indexes.append(constant_velocity(b))
+    ending_time_indexes.append(starting_time_indexes[b-1])
     a = ending_time_indexes[b-1]
     try:
         print("Manuever", b, str(manus[b][a][1]), str(manus[b][a][2]), str(manus[b][a][3]), str(manus[b][a][4]), str(manus[b][a][5]), str(manus[b][a][6]))
@@ -79,26 +76,26 @@ for b in range(1, 7):
         print("No maneuver, and thus no ending time.")
 
 #magnitude
-def magnitude(start, stop, manu):
+def magnitude(start, manu):
     #7-9 are (x, y, z)
-    return ((float(manus[manu][stop][7])-float(manus[manu][start][7]))**2 +(float(manus[manu][stop][8])-float(manus[manu][start][8]))**2 +(float(manus[manu][stop][9])-float(manus[manu][start][9]))**2)**0.5
+    return ((float(manus[manu][start+1][7])-float(manus[manu][start][7]))**2 +(float(manus[manu][start+1][8])-float(manus[manu][start][8]))**2 +(float(manus[manu][start+1][9])-float(manus[manu][start][9]))**2)**0.5
 
 print("Magnitudes")
 for b in range(1, 7):
     try:
-        print(magnitude(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
+        print(magnitude(starting_time_indexes[b-1], b))
     except:
         print("No maneuver, and thus no magnitude.")
 
 #direction
 #find directional unit vector by dividing vector by magnitude
-def direction(start, stop, manu):
-    mag = magnitude(starting_time_indexes[manu-1], ending_time_indexes[manu-1], manu)
-    return ((float(manus[manu][stop][7])-float(manus[manu][start][7]))/mag, (float(manus[manu][stop][8])-float(manus[manu][start][8]))/mag, (float(manus[manu][stop][9])-float(manus[manu][start][9]))/mag)
+def direction(start, manu):
+    mag = magnitude(starting_time_indexes[manu-1], manu)
+    return ((float(manus[manu][start+1][7])-float(manus[manu][start][7]))/mag, (float(manus[manu][start+1][8])-float(manus[manu][start][8]))/mag, (float(manus[manu][start+1][9])-float(manus[manu][start][9]))/mag)
 
 print("Directions")
 for b in range(1, 7):
     try:
-        print(direction(starting_time_indexes[b-1], ending_time_indexes[b-1], b))
+        print(direction(starting_time_indexes[b-1], b))
     except:
         print("No maneuver, and thus, not direction.")
