@@ -68,7 +68,7 @@ def constant_velocity(manu):
 print("Manuever Ending Times")
 ending_time_indexes = []
 for b in range(1, 7):
-    ending_time_indexes.append(starting_time_indexes[b-1])
+    ending_time_indexes.append(starting_time_indexes[b-1]+1)
     a = ending_time_indexes[b-1]
     try:
         print("Manuever", b, str(manus[b][a][1]), str(manus[b][a][2]), str(manus[b][a][3]), str(manus[b][a][4]), str(manus[b][a][5]), str(manus[b][a][6]))
