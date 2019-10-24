@@ -1,3 +1,6 @@
+#import libraries if needed
+import math
+
 #read files
 
 manu0 = 'ssa_urop_maneuver_10000.txt'
@@ -32,13 +35,9 @@ manus.append(organize_data(manu6))
 def divergence(manu):
     for a in range(0, len(manus[1])):
         #if percent error is larger than 5%, the maneuver must have begun
-        try:
-            if abs((float(manus[manu][a][7]) - float(manus[0][a][7]))/float(manus[0][a][7])) > 0.05:
-                return a
-                #return str(manus[manu][a][1], manus[manu][a][2], manus[manu][a][3], manus[manu][a][4], manus[manu][a][5], manus[manu][a][6])
-        except:
-            if abs((float(manus[manu][a][7]) - float(manus[0][a][7]))/0.001) > 0.05:
-                return a
+        if abs(float(manus[manu][a][7]) - float(manus[0][a][7])) > 0.05:
+            return a
+            #return str(manus[manu][a][1], manus[manu][a][2], manus[manu][a][3], manus[manu][a][4], manus[manu][a][5], manus[manu][a][6])
 
 print("Manuever Starting Times")
 starting_time_indexes = []
@@ -62,6 +61,9 @@ def constant_velocity(manu):
             #speed1 = (manus[manu][a-1][10]**2 + manus[manu][a-1][11]**2 + manus[manu][a-1][12]**2)**0.5
             #speed2 = (manus[manu][a][10]**2 + manus[manu][a][11]**2 + manus[manu][a][12]**2)**0.5
             #epochs are 10 minutes apart
+            #print(speed1)
+            #print(speed2)
+            #print((speed2-speed1)/10)
             if (speed2-speed1)/10 < 0.05:
                 return a
                 #return str(manus[manu][a][1], manus[manu][a][2], manus[manu][a][3], manus[manu][a][4], manus[manu][a][5], manus[manu][a][6])
