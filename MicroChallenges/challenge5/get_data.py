@@ -23,5 +23,14 @@ def getdata(file):
 
 
 
-file = './data/Telstar401_22927_inc_semi-maj-axis.txt'
-print(getdata(file))
+files = '22927.txt'
+sat22927 = getdata("22927.txt")
+#sat24812 = getdata("24812.txt")
+#sat36516 = getdata("36516.txt")
+#sat37392 = getdata("37392.txt")
+#sat39122 = getdata("39122.txt")
+#sat39476 = getdata("39476.txt")
+#sat40424 = getdata("40424.txt")
+#sat40425 = getdata("40425.txt")
+#sat40875 = getdata("40875.txt")
+#sat41308 = getdata("41308.txt")
