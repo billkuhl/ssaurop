@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 data_bunch = load_iris()
 x=data_bunch.data
 y = data_bunch.target
+print(y)
 
 distortion = []
 iterations = range(1,10)
