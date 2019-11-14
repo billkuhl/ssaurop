@@ -29,9 +29,30 @@ def get_specific_data(sat,feature):
 		d.append(line[featdict[feature]])
 	return d
 
+def convert_date_to_epoch(date):
+    epoch = date[2:4]
+    print(epoch)
+    months = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
+    month = date[5:7]
+    total = 0
+    for i in range(1,int(month)):
+        total+= months[i]
+        print(total)
+    total += int(date[8:10])
+    print(total)
+    hours = date[11:13]
+    print(hours)
+    minutes = date[14:16]
+    print(minutes)
+    minutesInADay = 24*60
+    decimal = (int(hours)*60 + int(minutes))/minutesInADay
+    decimal = str(decimal)
+    return epoch + str(total) + decimal[1:]
+
 
 
 if __name__ == '__main__':
-	print(get_specific_data(43,'EPOCH'))
+	#print(get_specific_data(74415,'INCLINATION'))
+	print(convert_date_to_epoch("2019-11-08 08:39:00"))
 
 
