@@ -18,7 +18,6 @@ for item in wk2['EPOCH']:
 wk2['EPOCH'] = newtimes2
 
 satdict = {}
-satdict2 = {}
 for row in wk1.values.tolist():
 	if row[0] in satdict.keys():
 		satdict[row[0]].append(row[1:])
@@ -26,18 +25,15 @@ for row in wk1.values.tolist():
 		satdict[row[0]] = [row[1:]]
 
 for row in wk2.values.tolist():
-	if row[0] in satdict2.keys():
-		satdict2[row[0]].append(row[1:])
+	if row[0] in satdict.keys():
+		satdict[row[0]].append(row[1:])
 	else:
-		satdict2[row[0]] = [row[1:]]
+		satdict[row[0]] = [row[1:]]
 
-print(len(satdict))
-print(len(satdict2))
 unique = []
 for key in satdict.keys():
-    if key not in satdict2.keys():
+    if key not in satdict.keys():
         unique.append(key)
-print(len(unique))
 def get_sat_ids():
 	sat_ids = set()
 	for item in wk1['NORAD_CAT_ID']:
@@ -49,7 +45,7 @@ def get_specific_data(sat,feature):
 	s = satdict[sat]
 	d = []
 	for line in s:
-		d.append([line[featdict[feature]]])
+		d.append(line[featdict[feature]])
 	return d
 
 def convert_date_to_epoch(date):
@@ -67,7 +63,13 @@ def convert_date_to_epoch(date):
     decimal = str(decimal)
     return epoch + str(total) + decimal[1:]
 
-
+def find_others(low, high, feature):
+    others = []
+    for sat_num in satdict.keys():
+        data = get_specific_data(sat_num, "PERIGEE")
+        if data[0] >= low and data[0] <= high:
+            others.append(sat_num)
+    return others
 
 if __name__ == '__main__':
     print(get_specific_data(9191,'PERIGEE'))
@@ -75,7 +77,27 @@ if __name__ == '__main__':
     print(get_specific_data(30206,'PERIGEE'))
     print(get_specific_data(79815,'PERIGEE'))
     print(get_specific_data(74415,'PERIGEE'))
-	#print(get_specific_data(1194, "MEAN_MOTION"))
-	#print(satdict[1194])
+    print(get_specific_data(1194, "MEAN_MOTION"))
+    other_sats = find_others(560.9, 561, "PERIGEE")
+    print(9356 in other_sats)
+    print(31859 in other_sats)
+    print(36829 in other_sats)
+    print(45268 in other_sats)
+    print(47507 in other_sats)
+    print(70237 in other_sats)
+    print(72643 in other_sats)
+    print(74562 in other_sats)
+    print(74866 in other_sats)
+    print(87337 in other_sats)
+    print(89581 in other_sats)
+    print(95609 in other_sats)
+    print(10814 in other_sats)
+    print(12605 in other_sats)
+    print(54494 in other_sats)
+    print(55340 in other_sats)
+    print(58006 in other_sats)
+    print(75276 in other_sats)
+    print(87343 in other_sats)
+    print(88756 in other_sats)
 
 
