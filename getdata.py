@@ -99,5 +99,3 @@ if __name__ == '__main__':
     print(75276 in other_sats)
     print(87343 in other_sats)
     print(88756 in other_sats)
-
-
